@@ -1,0 +1,33 @@
+-- Instructions --
+
+Controls:
+W = Up     A = Left
+S = Down   D = Right   E = Dig
+
+You are trapped in a dungeon and the only exit is 
+blocked by a boulder that can only be moved if you
+eat enough energy bars.
+
+Lucky for you there are plenty of energy bars
+scattered around the dungeon left by previous 
+explorers.
+
+Unfortunately there are ancient evil mummies
+wandering randomly around the dungeon and if you
+touch the enemy you lose a life.
+
+The only defence you have against the mummies are
+spades that can be found in the dungeon. A spade 
+allows you to dig a hole that traps any mummy that 
+falls in, however you will lose a life you fall in!
+
+You can leave the dungeon once enough energy bars 
+are collected, the boulder is moved and the exit is
+reached before you run out of lives.
+
+Key:
+'@' = Player       '#' = Wall        'S' = Spade
+'.' = Empty Space  'B' = Boulder     'O' = Hole
+'X' = Exit         'E' = Energy Bar  'M' = Evil Mummy   
+
+Press Enter to return to Main Menu:
