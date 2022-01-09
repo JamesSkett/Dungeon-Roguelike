@@ -5,17 +5,15 @@
 
 #include "MainMenu.h"
 #include "GameSystem.h"
+#include "Renderer.h"
 
 using namespace std;
 
 int main()
 {	
-	//sets up the game and loads the level
-	GameSystem gameSystem("Level_1.txt");
+	Renderer renderer;
 
-	//main game function
-	gameSystem.playGame();
+	renderer.Init();
 
-	_getch();
 	return 0;
 }
