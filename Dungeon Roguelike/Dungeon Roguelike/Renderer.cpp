@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Tile.h"
 
 Renderer::Renderer()
 {
@@ -15,11 +16,7 @@ Renderer::Renderer()
         printf("couldn't initialize image addon\n");
     }
 
-    image = al_load_bitmap("turtle.jpg");
-    if (!image)
-    {
-        printf("Couldnt Load image\n");
-    }
+    tile = new Tile(0, 0, "turtle.jpg");
 
 }
 
@@ -45,7 +42,7 @@ void Renderer::Init()
         if (redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_bitmap(image, 0, 0, 0);
+            tile->Draw();
 
             al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "Hello world!");
 
@@ -60,7 +57,6 @@ void Renderer::Init()
 
 Renderer::~Renderer()
 {
-    al_destroy_bitmap(image);
 
     al_destroy_font(font);
     al_destroy_display(disp);

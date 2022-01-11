@@ -6,6 +6,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
+class Tile;
+
 class Renderer
 {
 public:
@@ -21,6 +23,6 @@ private:
 	ALLEGRO_DISPLAY* disp;
 	ALLEGRO_FONT* font;
 
-	ALLEGRO_BITMAP* image;
+	Tile* tile;
 };
 
