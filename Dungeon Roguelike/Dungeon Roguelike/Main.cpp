@@ -11,9 +11,9 @@ using namespace std;
 
 int main()
 {	
-	Renderer renderer;
+	GameSystem* renderer = new GameSystem("hahahah");
 
-	renderer.Init();
+	renderer->playGame();
 
 	return 0;
 }

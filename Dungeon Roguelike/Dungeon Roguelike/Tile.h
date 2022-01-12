@@ -6,6 +6,8 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
+class Image;
+
 class Tile
 {
 public:
@@ -13,17 +15,14 @@ public:
 	Tile() = default;
 	void Draw();
 
-	void GetPosition(float& x, float& y) const;
+	Image* GetImage();
 
 	~Tile();
 
 private:
-	float m_x, m_y;
 	bool m_walkable;
 
-	const char* m_filePath;
-
-	ALLEGRO_BITMAP* image;
+	Image* image;
 
 };
 

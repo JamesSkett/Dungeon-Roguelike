@@ -4,7 +4,10 @@
 #include "MainMenu.h"
 #include <string>
 
-using namespace std;
+#include <allegro5/allegro5.h>
+
+class Tile;
+class Renderer;
 
 class GameSystem
 {
@@ -23,5 +26,10 @@ private:
 	Level* _level = new Level;
 	MainMenu _mainMenu;
 
+	ALLEGRO_TIMER* m_timer;
+	ALLEGRO_EVENT_QUEUE* m_queue;
+
+	Renderer* renderer;
+	Tile* tile;
 };
 
