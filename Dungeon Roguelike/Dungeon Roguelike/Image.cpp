@@ -7,6 +7,7 @@ Image::Image(float x, float y, const char* filePath)
 	m_x = x;
 	m_y = y;
 	m_rotation = 0;
+	m_scale = 1;
 
 	bitmap = al_load_bitmap(filePath);
 	if (!bitmap)

@@ -5,20 +5,18 @@
 #include <conio.h>
 
 //Constructor sets up the game
-GameSystem::GameSystem(std::string levelFileName)
+GameSystem::GameSystem(const char* levelFileName)
 {
 	renderer = new Renderer();
 
 	m_timer = al_create_timer(1.0 / 30.0);
 	m_queue = al_create_event_queue();
 
-	tile = new Tile(0, 0, true, "turtle.jpg");
-
 	//_mainMenu.displayMenu();
 
 	//_player.init(3, 0, 0);
 
-	//_level->load(levelFileName, _player);
+	m_level->Load(levelFileName, m_vTiles);
 }
 
 GameSystem::~GameSystem()
@@ -26,10 +24,10 @@ GameSystem::~GameSystem()
 	al_destroy_timer(m_timer);
 	al_destroy_event_queue(m_queue);
 
-	if (_level != nullptr) 	
+	if (m_level != nullptr) 	
 	{
-		delete _level;		
-		_level = nullptr;	
+		delete m_level;		
+		m_level = nullptr;	
 	}
 
 }
@@ -59,7 +57,10 @@ void GameSystem::playGame()
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-			tile->Draw();
+			for (int i = 0; i < m_vTiles.size(); i++)
+			{
+				m_vTiles[i]->Draw();
+			}
 
             al_flip_display();
 
@@ -79,7 +80,7 @@ void GameSystem::playerMove()
 	printf("\n\nEnter a move command (W/A/S/D), press 'E' to dig hole or Press 'Q' to quit: ");
 	input = _getch();
 
-	_level->movePlayer(input, _player);
+	m_level->movePlayer(input, m_player);
 }
 
 //-----------------------------------------------------------------------------
@@ -89,7 +90,7 @@ void GameSystem::deathScreen()
 	system("CLS");
 	printf("           YOU DIED!\n\n");
 
-	_player.printProperties();
+	//_player.printProperties();
 	_getch();
 }
 

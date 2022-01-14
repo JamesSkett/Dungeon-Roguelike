@@ -3,36 +3,38 @@
 #include <conio.h>
 #include <cstdlib>
 
-using namespace std;
+#include "Tile.h"
+#include "Wall.h"
+#include "Floor.h"
 
 Level::Level()
 {
 }
 
 //---------------------------------------------------------------------------
-void Level::load(string fileName, Player& player)   //This loads the level from the file "Level_1.txt"
+void Level::Load(const char* fileName, std::vector<Tile*> &tiles)   //This loads the level from the file "Level_1.txt"
 {
 	//Loads the  level
-	ifstream file;
+	std::ifstream file;
 
 	//Open the file and quit if it fails to open
 	file.open(fileName);
 	if (file.fail())
 	{
-		perror(fileName.c_str());
+		perror(fileName);
 		printf("Press any key to continue:");
 		_getch();
 		exit(1);
 	}
 
-	string line;
+	std::string line;
 
 	//Loop through the entire file, getting each row and
 	//putting it in the line string.
-	while (getline(file, line)) 
+	while (std::getline(file, line)) 
 	{
 		//Push the current line onto the _levelData array
-		_levelData.push_back(line);
+		m_levelData.push_back(line);
 	}
 
 	file.close();
@@ -40,28 +42,43 @@ void Level::load(string fileName, Player& player)   //This loads the level from 
 	//Process the Level
 	char tile;
 
+
+
 	//loops through the _levelData vector and processes each tile
-	for (int i = 0; i < _levelData.size(); i++)
+	for (int i = 0; i < m_levelData.size(); i++)
 	{
-		for (int j = 0; j < _levelData[i].size(); j++)
+		for (int j = 0; j < m_levelData[i].size(); j++)
 		{
-			tile = _levelData[i][j];
+			tile = m_levelData[i][j];
+
+			float x = (float)j;
+			float y = (float)i;
 
 			switch (tile)
 			{
 			case '@':
-				player.setPosition(j, i);
+				CreateFloor(x, y, tiles);
+				//player.setPosition(j, i);
 				break;
 			case 'M':
-				_enemy.push_back(Enemy('M'));
-				_enemy.back().setPosition(j, i);
+				CreateFloor(x, y, tiles);
+				//m_enemy.push_back(Enemy('M'));
+				//m_enemy.back().setPosition(j, i);
 				break;
 			case '#': //All the tiles that dont need extra processing, in this case, walls, air, spade and energy bar
+				CreateWall(x, y, tiles);
+				break;
 			case '.':
+				CreateFloor(x, y, tiles);
 			case 'S':
+				CreateFloor(x, y, tiles);
+
 			case 'E':
+				CreateFloor(x, y, tiles);
 			case 'B':
+				CreateFloor(x, y, tiles);
 			case 'X':
+				CreateFloor(x, y, tiles);
 				//Doesnt need to do anthing, just break.
 				break;
 			default: //If it gets here, tile hasnt been registered the, so print out a warning
@@ -74,15 +91,25 @@ void Level::load(string fileName, Player& player)   //This loads the level from 
 
 }
 
+void Level::CreateFloor(float x, float y, std::vector<Tile*> &tiles)
+{
+	tiles.push_back(new Floor(x * m_tileOffset, y * m_tileOffset, true, "floor.png"));
+}
+
+void Level::CreateWall(float x, float y, std::vector<Tile*>& tiles)
+{
+	tiles.push_back(new Wall(x * m_tileOffset, y * m_tileOffset, false, "wall.png"));
+}
+
 //---------------------------------------------------------------------------
 void Level::print() //Prints out the level.
 {
 	//prints a bunch of new lines so previous level print cant be seen
-	printf("%s", string(100, '\n').c_str());
+	printf("%s", std::string(100, '\n').c_str());
 
 	//prints each line of the vector 1 by 1
-	for (int i = 0; i < _levelData.size(); i++) {
-		printf("%s\n", _levelData[i].c_str());
+	for (int i = 0; i < m_levelData.size(); i++) {
+		printf("%s\n", m_levelData[i].c_str());
 	}
 
 }
@@ -159,12 +186,12 @@ void Level::updateEnemies(Player & player)
 	player.getPosition(playerX, playerY);
 
 	//Loop through the enemy vector
-	for (int i = 0; i < _enemy.size(); i++)
+	for (int i = 0; i < m_enemy.size(); i++)
 	{
 		//get enemy AI movemnet 
-		enemyMove = _enemy[i].getMove(playerX, playerY);
+		enemyMove = m_enemy[i].getMove(playerX, playerY);
 		//get enemies current position
-		_enemy[i].getPosition(enemyX, enemyY);
+		m_enemy[i].getPosition(enemyX, enemyY);
 		//process the AI move
 		switch (enemyMove)
 		{
@@ -188,13 +215,13 @@ void Level::updateEnemies(Player & player)
 //---------------------------------------------------------------------------
 char Level::getTile(int x, int y)  //Gets a tile from the board
 {
-	return _levelData[y][x];
+	return m_levelData[y][x];
 }
 
 //---------------------------------------------------------------------------
 void Level::setTile(int x, int y, char tile) //sets a tile on the board
 {
-	_levelData[y][x] = tile;
+	m_levelData[y][x] = tile;
 }
 
 //---------------------------------------------------------------------------
@@ -279,7 +306,7 @@ void Level::processEnemyMove(Player & player, int enemyIndex, int targetX, int t
 	int enemyY;
 
 	//gets the position of the current enemy
-	_enemy[enemyIndex].getPosition(enemyX, enemyY);
+	m_enemy[enemyIndex].getPosition(enemyX, enemyY);
 
 	//stores the tile the enemy is trying to move to in char move tile
 	char moveTile = getTile(targetX, targetY);
@@ -287,16 +314,16 @@ void Level::processEnemyMove(Player & player, int enemyIndex, int targetX, int t
 	switch (moveTile)
 	{
 	case '.': //enemy can move
-		_enemy[enemyIndex].setPosition(targetX, targetY);
+		m_enemy[enemyIndex].setPosition(targetX, targetY);
 		setTile(enemyX, enemyY, '.');
-		setTile(targetX, targetY, _enemy[enemyIndex].getTile());
+		setTile(targetX, targetY, m_enemy[enemyIndex].getTile());
 		break;
 	case 'O': //enemy dies if it falls down hole
-		_enemy[enemyIndex].setPosition(targetX, targetY);
+		m_enemy[enemyIndex].setPosition(targetX, targetY);
 		setTile(enemyX, enemyY, '.');
 		//remove enemy from vector if fallen down hole
-		_enemy[enemyIndex] = _enemy.back();
-		_enemy.pop_back();
+		m_enemy[enemyIndex] = m_enemy.back();
+		m_enemy.pop_back();
 		enemyIndex--;
 		break;
 	default:

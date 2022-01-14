@@ -11,9 +11,11 @@ using namespace std;
 
 int main()
 {	
-	GameSystem* renderer = new GameSystem("hahahah");
+	GameSystem* renderer = new GameSystem("level_1.txt");
 
 	renderer->playGame();
+
+	delete renderer;
 
 	return 0;
 }

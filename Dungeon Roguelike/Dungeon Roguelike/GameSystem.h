@@ -13,7 +13,7 @@ class GameSystem
 {
 public:
 	//constructor
-	GameSystem(string levelFileName);
+	GameSystem(const char* levelFileName);
 	~GameSystem();
 
 	//main game functions
@@ -22,14 +22,14 @@ public:
 	void deathScreen();
 
 private:
-	Player _player;
-	Level* _level = new Level;
-	MainMenu _mainMenu;
+	Player m_player;
+	Level* m_level = new Level;
+	MainMenu m_mainMenu;
 
 	ALLEGRO_TIMER* m_timer;
 	ALLEGRO_EVENT_QUEUE* m_queue;
 
 	Renderer* renderer;
-	Tile* tile;
+	std::vector<Tile*> m_vTiles;
 };
 

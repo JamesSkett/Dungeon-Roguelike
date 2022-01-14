@@ -25,9 +25,7 @@ public:
 	~Image();
 
 private:
-	float m_x, m_y, m_rotation;
-
-	const char* m_filePath;
+	float m_x, m_y, m_rotation, m_scale;
 
 	ALLEGRO_BITMAP* bitmap;
 };

@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "Enemy.h"
 
-using namespace std;
+class Tile;
 
 //The level stores the data for the level and the enemy list, and does a lot
 //of the core game logic
@@ -13,7 +13,10 @@ class Level
 public:
 	Level();
 
-	void load(string fileName, Player &player);
+	void Load(const char* fileName, std::vector<Tile*>& tiles);
+	void CreateFloor(float x, float y, std::vector<Tile*>& tiles);
+	void CreateWall(float x, float y, std::vector<Tile*>& tiles);
+
 	void print();
 
 	void movePlayer(char input, Player &player);
@@ -26,14 +29,17 @@ public:
 	//Setters
 	void setTile(int x, int y, char tile);
 
+
+
 private:
 	void processPlayerMove(Player &player, int targetX, int targetY);
 	void processEnemyMove(Player &player, int enemyIndex, int targetX, int targetY);
 	void digHole(Player &player, int targetX, int targetY);
 
-private:
 	//stores the level information
-	vector <string> _levelData;
-	vector <Enemy> _enemy;
+	std::vector <std::string> m_levelData;
+	std::vector <Enemy> m_enemy;
+
+	float m_tileOffset = 64.f;
 };
 
