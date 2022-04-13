@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "Player.h"
 #include "Enemy.h"
 
 class Tile;
+class Player;
 
 //The level stores the data for the level and the enemy list, and does a lot
 //of the core game logic
@@ -13,7 +13,7 @@ class Level
 public:
 	Level();
 
-	void Load(const char* fileName, std::vector<Tile*>& tiles);
+	void Load(const char* fileName, std::vector<Tile*>& tiles, Player* &player);
 	void CreateFloor(float x, float y, std::vector<Tile*>& tiles);
 	void CreateWall(float x, float y, std::vector<Tile*>& tiles);
 

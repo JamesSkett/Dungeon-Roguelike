@@ -3,16 +3,21 @@
 #include <conio.h>
 #include <cstdlib>
 
+#include <allegro5/allegro_native_dialog.h>
+
+
 #include "Tile.h"
 #include "Wall.h"
 #include "Floor.h"
+#include "Player.h"
+#include "Renderer.h"
 
 Level::Level()
 {
 }
 
 //---------------------------------------------------------------------------
-void Level::Load(const char* fileName, std::vector<Tile*> &tiles)   //This loads the level from the file "Level_1.txt"
+void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &player)   //This loads the level from the file "Level_1.txt"
 {
 	//Loads the  level
 	std::ifstream file;
@@ -22,8 +27,9 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles)   //This loads
 	if (file.fail())
 	{
 		perror(fileName);
-		printf("Press any key to continue:");
-		_getch();
+
+		al_show_native_message_box(Renderer::disp, "Message Box", "Error", "OMG IT DED", NULL, ALLEGRO_MESSAGEBOX_ERROR);
+
 		exit(1);
 	}
 
@@ -58,6 +64,7 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles)   //This loads
 			{
 			case '@':
 				CreateFloor(x, y, tiles);
+				player = new Player(x * m_tileOffset, y * m_tileOffset, "player.png");
 				//player.setPosition(j, i);
 				break;
 			case 'M':
@@ -117,59 +124,57 @@ void Level::print() //Prints out the level.
 //---------------------------------------------------------------------------
 void Level::movePlayer(char input, Player &player)
 {
-	//used to store player position
-	int playerX;
-	int playerY;
+	////used to store player position
+	//int playerX;
+	//int playerY;
 
-	//Get the position from the player using the reference parameters playerX and playerY
-	player.getPosition(playerX, playerY);
 
-	//checks to see if player has a spade or not then stores answer in bool hasSpade
-	bool hasSpade = player.hasSpade();
+	////checks to see if player has a spade or not then stores answer in bool hasSpade
+	//bool hasSpade = player.hasSpade();
 
-	//processes the player input
-	switch (input)
-	{
-	case 'w': //up
-	case 'W':
-		processPlayerMove(player, playerX, playerY - 1);
-		break;
-	case 's': //down
-	case 'S':
-		processPlayerMove(player, playerX, playerY + 1);
-		break;
-	case 'a': //left
-	case 'A':
-		processPlayerMove(player, playerX - 1, playerY);
-		break;
-	case 'd': //right
-	case 'D':
-		processPlayerMove(player, playerX + 1, playerY);
-		break;
-	case 'e': //dig hole
-	case 'E':
-		//if you dont have a spade you cant dig
-		if (hasSpade == false)
-		{
-			printf("\nYou dont have a spade!!");
-			_getch();
-			break;
-		}
-		else
-		{
-			digHole(player, playerX, playerY);
-		}
-		break;
-	case 'q': //quits the game
-	case 'Q':
-		exit(1);
-		break;
-	default:
-		printf("Invalid Input!!\n");
-		printf("Press any key to continue:");
-		_getch();
-		break;
-	}
+	////processes the player input
+	//switch (input)
+	//{
+	//case 'w': //up
+	//case 'W':
+	//	processPlayerMove(player, playerX, playerY - 1);
+	//	break;
+	//case 's': //down
+	//case 'S':
+	//	processPlayerMove(player, playerX, playerY + 1);
+	//	break;
+	//case 'a': //left
+	//case 'A':
+	//	processPlayerMove(player, playerX - 1, playerY);
+	//	break;
+	//case 'd': //right
+	//case 'D':
+	//	processPlayerMove(player, playerX + 1, playerY);
+	//	break;
+	//case 'e': //dig hole
+	//case 'E':
+	//	//if you dont have a spade you cant dig
+	//	if (hasSpade == false)
+	//	{
+	//		printf("\nYou dont have a spade!!");
+	//		_getch();
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		digHole(player, playerX, playerY);
+	//	}
+	//	break;
+	//case 'q': //quits the game
+	//case 'Q':
+	//	exit(1);
+	//	break;
+	//default:
+	//	printf("Invalid Input!!\n");
+	//	printf("Press any key to continue:");
+	//	_getch();
+	//	break;
+	//}
 
 }
 
@@ -177,38 +182,38 @@ void Level::movePlayer(char input, Player &player)
 //updates the enemies getting a random move from enemy.getMove()
 void Level::updateEnemies(Player & player)
 {
-	char enemyMove;
-	int playerX;
-	int playerY;
-	int enemyX;
-	int enemyY;
+	//char enemyMove;
+	//int playerX;
+	//int playerY;
+	//int enemyX;
+	//int enemyY;
 
-	player.getPosition(playerX, playerY);
+	//player.getPosition(playerX, playerY);
 
-	//Loop through the enemy vector
-	for (int i = 0; i < m_enemy.size(); i++)
-	{
-		//get enemy AI movemnet 
-		enemyMove = m_enemy[i].getMove(playerX, playerY);
-		//get enemies current position
-		m_enemy[i].getPosition(enemyX, enemyY);
-		//process the AI move
-		switch (enemyMove)
-		{
-		case 'w':
-			processEnemyMove(player, i, enemyX, enemyY - 1);
-			break;
-		case 's':
-			processEnemyMove(player, i, enemyX - 1, enemyY);
-			break;
-		case 'a':
-			processEnemyMove(player, i, enemyX, enemyY + 1);
-			break;
-		case 'd':
-			processEnemyMove(player, i, enemyX + 1, enemyY);
-			break;
-		}
-	}
+	////Loop through the enemy vector
+	//for (int i = 0; i < m_enemy.size(); i++)
+	//{
+	//	//get enemy AI movemnet 
+	//	enemyMove = m_enemy[i].getMove(playerX, playerY);
+	//	//get enemies current position
+	//	//m_enemy[i].getPosition(enemyX, enemyY);
+	//	//process the AI move
+	//	switch (enemyMove)
+	//	{
+	//	case 'w':
+	//		processEnemyMove(player, i, enemyX, enemyY - 1);
+	//		break;
+	//	case 's':
+	//		processEnemyMove(player, i, enemyX - 1, enemyY);
+	//		break;
+	//	case 'a':
+	//		processEnemyMove(player, i, enemyX, enemyY + 1);
+	//		break;
+	//	case 'd':
+	//		processEnemyMove(player, i, enemyX + 1, enemyY);
+	//		break;
+	//	}
+	//}
 
 }
 
@@ -228,109 +233,109 @@ void Level::setTile(int x, int y, char tile) //sets a tile on the board
 //Process the players movement
 void Level::processPlayerMove(Player & player, int targetX, int targetY)
 {
-	int playerX;
-	int playerY;
-	player.getPosition(playerX, playerY);
+	//int playerX;
+	//int playerY;
+	//player.getPosition(playerX, playerY);
 
-	//Get the tile that the player wants to move onto
-	char moveTile = getTile(targetX, targetY);
+	////Get the tile that the player wants to move onto
+	//char moveTile = getTile(targetX, targetY);
 
-	//Process the tile
-	switch (moveTile)
-	{
-	case '.': //if the tile is a '.' then player can move
-		player.setPosition(targetX, targetY);
-		setTile(playerX, playerY, '.');
-		setTile(targetX, targetY, '@');
-		break;
-	case '#': //if tile is a wall player cant move so just break
-		break;
-	case 'O': //if tile is a hole player dies and gets reset to starting point and life is lost
-		player.setPosition(1, 1);
-		setTile(playerX, playerY, '.');
-		setTile(1, 1, '@');
-		player.removeLives();
-		printf("\nYou Fell down a hole!\n Press any key to continue:");
-		_getch();
-		break;
-	case 'M': //if tile is a mummy player dies and gets reset to starting point and life is lost
-		player.setPosition(1, 1);
-		setTile(playerX, playerY, '.');
-		setTile(1, 1, '@');
-		player.removeLives();
-		break;
-	case 'S': //if tile is a spade then player can move there and gains a spade
-		player.setPosition(targetX, targetY);
-		setTile(playerX, playerY, '.');
-		setTile(targetX, targetY, '@');
-		player.addSpade();
-		break;
-	case 'E': //if tile is a spade then player can move there and gains an energy bar
-		player.setPosition(targetX, targetY);
-		setTile(playerX, playerY, '.');
-		setTile(targetX, targetY, '@');
-		player.addEnergyBar();
-		break;
-	case 'B':
-		//if all energy bars are collected player can break the boulder
-		if (player._energyBars == 8)
-		{
-			player.setPosition(targetX, targetY);
-			setTile(playerX, playerY, '.');
-			setTile(targetX, targetY, '@');
-		}
-		else
-		{
-			printf("\nYou dont have enough energy bars to pass!");
-			_getch();
-		}
+	////Process the tile
+	//switch (moveTile)
+	//{
+	//case '.': //if the tile is a '.' then player can move
+	//	player.setPosition(targetX, targetY);
+	//	setTile(playerX, playerY, '.');
+	//	setTile(targetX, targetY, '@');
+	//	break;
+	//case '#': //if tile is a wall player cant move so just break
+	//	break;
+	//case 'O': //if tile is a hole player dies and gets reset to starting point and life is lost
+	//	player.setPosition(1, 1);
+	//	setTile(playerX, playerY, '.');
+	//	setTile(1, 1, '@');
+	//	player.removeLives();
+	//	printf("\nYou Fell down a hole!\n Press any key to continue:");
+	//	_getch();
+	//	break;
+	//case 'M': //if tile is a mummy player dies and gets reset to starting point and life is lost
+	//	player.setPosition(1, 1);
+	//	setTile(playerX, playerY, '.');
+	//	setTile(1, 1, '@');
+	//	player.removeLives();
+	//	break;
+	//case 'S': //if tile is a spade then player can move there and gains a spade
+	//	player.setPosition(targetX, targetY);
+	//	setTile(playerX, playerY, '.');
+	//	setTile(targetX, targetY, '@');
+	//	player.addSpade();
+	//	break;
+	//case 'E': //if tile is a spade then player can move there and gains an energy bar
+	//	player.setPosition(targetX, targetY);
+	//	setTile(playerX, playerY, '.');
+	//	setTile(targetX, targetY, '@');
+	//	player.addEnergyBar();
+	//	break;
+	//case 'B':
+	//	//if all energy bars are collected player can break the boulder
+	//	if (player._energyBars == 8)
+	//	{
+	//		player.setPosition(targetX, targetY);
+	//		setTile(playerX, playerY, '.');
+	//		setTile(targetX, targetY, '@');
+	//	}
+	//	else
+	//	{
+	//		printf("\nYou dont have enough energy bars to pass!");
+	//		_getch();
+	//	}
 
-		break;
-	case 'X':
-		//game won
-		system("CLS");
-		printf("              -------LEVEL COMPLETE!-------\n");
-		printf("      Congradulations you completed the level!!\n\n");
-		printf("                Press any key to quit:");
-		_getch();
-		exit(1);
-		break;
-	}
+	//	break;
+	//case 'X':
+	//	//game won
+	//	system("CLS");
+	//	printf("              -------LEVEL COMPLETE!-------\n");
+	//	printf("      Congradulations you completed the level!!\n\n");
+	//	printf("                Press any key to quit:");
+	//	_getch();
+	//	exit(1);
+	//	break;
+	//}
 }
 
 //-----------------------------------------------------------------------------------------------------
 //processes the enemy AI move
 void Level::processEnemyMove(Player & player, int enemyIndex, int targetX, int targetY)
 {
-	int enemyX;
-	int enemyY;
+	//int enemyX;
+	//int enemyY;
 
-	//gets the position of the current enemy
-	m_enemy[enemyIndex].getPosition(enemyX, enemyY);
+	////gets the position of the current enemy
+	//m_enemy[enemyIndex].getPosition(enemyX, enemyY);
 
-	//stores the tile the enemy is trying to move to in char move tile
-	char moveTile = getTile(targetX, targetY);
+	////stores the tile the enemy is trying to move to in char move tile
+	//char moveTile = getTile(targetX, targetY);
 
-	switch (moveTile)
-	{
-	case '.': //enemy can move
-		m_enemy[enemyIndex].setPosition(targetX, targetY);
-		setTile(enemyX, enemyY, '.');
-		setTile(targetX, targetY, m_enemy[enemyIndex].getTile());
-		break;
-	case 'O': //enemy dies if it falls down hole
-		m_enemy[enemyIndex].setPosition(targetX, targetY);
-		setTile(enemyX, enemyY, '.');
-		//remove enemy from vector if fallen down hole
-		m_enemy[enemyIndex] = m_enemy.back();
-		m_enemy.pop_back();
-		enemyIndex--;
-		break;
-	default:
-		//any other tiles the enemy cant move
-		break;
+	//switch (moveTile)
+	//{
+	//case '.': //enemy can move
+	//	m_enemy[enemyIndex].setPosition(targetX, targetY);
+	//	setTile(enemyX, enemyY, '.');
+	//	setTile(targetX, targetY, m_enemy[enemyIndex].getTile());
+	//	break;
+	//case 'O': //enemy dies if it falls down hole
+	//	m_enemy[enemyIndex].setPosition(targetX, targetY);
+	//	setTile(enemyX, enemyY, '.');
+	//	//remove enemy from vector if fallen down hole
+	//	m_enemy[enemyIndex] = m_enemy.back();
+	//	m_enemy.pop_back();
+	//	enemyIndex--;
+	//	break;
+	//default:
+	//	//any other tiles the enemy cant move
+	//	break;
 
-	}
+	//}
 
 
 }

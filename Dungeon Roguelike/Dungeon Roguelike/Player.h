@@ -1,9 +1,16 @@
 #pragma once
 
+class Image;
+
 class Player
 {
 public:
-	Player();
+	Player(float x, float y, const char* filePath);
+
+	void Draw();
+
+	Image* &GetImage();
+
 	void init(int lives, int energyBars, int spades);
 
 	void printProperties();
@@ -14,16 +21,12 @@ public:
 	void addEnergyBar();
 
 
-	//Setters
-	void setPosition(int x, int y);
-	//Getters
-	void getPosition(int &x, int &y);
-
 	//properties
-	int _energyBars;
-	int _lives;
+	int _energyBars = 0;
+	int _lives = 0;
 private:
-	int _spades;
+	int _spades = 0;
+	Image* m_image;
 
 
 protected:

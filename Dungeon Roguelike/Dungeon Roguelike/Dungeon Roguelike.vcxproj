@@ -80,6 +80,8 @@
     <LinkIncremental>true</LinkIncremental>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

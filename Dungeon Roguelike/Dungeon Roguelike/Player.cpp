@@ -3,14 +3,26 @@
 #include <conio.h>
 #include <cstdlib>
 
-using namespace std;
+#include "Image.h"
 
 
-Player::Player()
+Player::Player(float x, float y, const char* filePath)
 {
 	//initialises the players x and y coords to 0
-	_x = 0;
-	_y = 0;
+	_x = x;
+	_y = y;
+
+	m_image = new Image(_x, _y, filePath);
+}
+
+void Player::Draw()
+{
+	m_image->Draw();
+}
+
+Image* &Player::GetImage() 
+{
+	return m_image;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -83,18 +95,3 @@ void Player::addEnergyBar()
 	_energyBars++;
 }
 
-//---------------------------------------------------------------------------------------------------
-//sets the players position
-void Player::setPosition(int x, int y)
-{
-	_x = x;
-	_y = y;
-}
-
-//---------------------------------------------------------------------------------------------------
-//gets the players position
-void Player::getPosition(int &x, int &y)
-{
-	x = _x;
-	y = _y;
-}

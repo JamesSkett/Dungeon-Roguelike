@@ -1,10 +1,13 @@
 #pragma once
 
-#include <stdio.h>
 
 #include <allegro5/allegro5.h>
-#include <allegro5/allegro_image.h>
+
+
 class Tile;
+
+#define SCREEN_WIDTH 1920
+#define SCREEN_HEIGHT 1080
 
 class Renderer
 {
@@ -14,9 +17,15 @@ public:
 	~Renderer();
 
 	static ALLEGRO_DISPLAY* disp;
+	static ALLEGRO_TRANSFORM camera;
 
+
+	void CameraUpdate(float* cameraPosition, float x, float y, int width, int height);
+
+	float* GetCameraPos();
 
 private:
+	float cameraPosition[2] = { 0, 0 };
 
 };
 

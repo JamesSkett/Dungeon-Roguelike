@@ -1,13 +1,14 @@
 #pragma once
-#include "Player.h"
-#include "Level.h"
-#include "MainMenu.h"
 #include <string>
+#include <vector>
 
 #include <allegro5/allegro5.h>
 
 class Tile;
 class Renderer;
+class Player;
+class Level;
+class MainMenu;
 
 class GameSystem
 {
@@ -22,9 +23,9 @@ public:
 	void deathScreen();
 
 private:
-	Player m_player;
-	Level* m_level = new Level;
-	MainMenu m_mainMenu;
+	Player* m_player;
+	Level* m_level;
+	//MainMenu m_mainMenu;
 
 	ALLEGRO_TIMER* m_timer;
 	ALLEGRO_EVENT_QUEUE* m_queue;
