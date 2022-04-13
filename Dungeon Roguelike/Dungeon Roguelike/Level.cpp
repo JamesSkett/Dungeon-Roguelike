@@ -363,7 +363,6 @@ void Level::digHole(Player &player, int targetX, int targetY)
 		case '#':
 		case 'M':
 			printf("\nYou Cant dig here!");
-			_getch();
 			break;
 		default:
 			setTile(targetX, targetY - 1, 'O');
@@ -380,7 +379,6 @@ void Level::digHole(Player &player, int targetX, int targetY)
 		case '#':
 		case 'M':
 			printf("\nYou Cant dig here!");
-			_getch();
 			break;
 		default:
 			setTile(targetX, targetY + 1, 'O');
@@ -397,7 +395,6 @@ void Level::digHole(Player &player, int targetX, int targetY)
 		case '#':
 		case 'M':
 			printf("\nYou Cant dig here!");
-			_getch();
 			break;
 		default:
 			setTile(targetX - 1, targetY, 'O');
@@ -415,7 +412,6 @@ void Level::digHole(Player &player, int targetX, int targetY)
 		case 'M':
 		case 'B':
 			printf("\nYou Cant dig here!");
-			_getch();
 			break;
 		default:
 			setTile(targetX + 1, targetY, 'O');
@@ -427,7 +423,6 @@ void Level::digHole(Player &player, int targetX, int targetY)
 	default:
 		printf("Invalid Input!!\n");
 		printf("Press any key to continue:");
-		_getch();
 		break;
 	}
 }

@@ -69,15 +69,15 @@ void GameSystem::playGame()
 			al_get_keyboard_state(&keyState);
 
 			if (al_key_down(&keyState, ALLEGRO_KEY_A))
-				m_player->GetImage()->UpdatePosition(-10, 0);
+				m_player->UpdatePosition(-5, 0, m_vTiles);
 			else if (al_key_down(&keyState, ALLEGRO_KEY_D))
-				m_player->GetImage()->UpdatePosition(10, 0);
+				m_player->UpdatePosition(5, 0, m_vTiles);
 			else if (al_key_down(&keyState, ALLEGRO_KEY_W))
-				m_player->GetImage()->UpdatePosition(0, -10);
+				m_player->UpdatePosition(0, -5, m_vTiles);
 			else if (al_key_down(&keyState, ALLEGRO_KEY_S))
-				m_player->GetImage()->UpdatePosition(0, 10);
+				m_player->UpdatePosition(0, 5, m_vTiles);
 			
-			renderer->CameraUpdate(renderer->GetCameraPos(), m_player->GetImage()->GetXPos(), m_player->GetImage()->GetYPos(), 64, 64);
+			renderer->CameraUpdate(renderer->GetCameraPos(), m_player->GetImage()->GetXPos(), m_player->GetImage()->GetYPos(), m_player->GetImage()->GetWidth(), m_player->GetImage()->GetHeight(), m_vTiles.back()->GetImage()->GetXPos() + 64, m_vTiles.back()->GetImage()->GetYPos() + 64);
 
 			al_identity_transform(&Renderer::camera);
 			al_translate_transform(&Renderer::camera, -renderer->GetCameraPos()[0], -renderer->GetCameraPos()[1]);
@@ -100,7 +100,7 @@ void GameSystem::playGame()
 			m_player->Draw();
 
             al_flip_display();
-
+			
             redraw = false;
         }
     }

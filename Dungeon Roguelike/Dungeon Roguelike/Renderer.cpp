@@ -28,7 +28,7 @@ Renderer::~Renderer()
     al_destroy_display(disp);
 }
 
-void Renderer::CameraUpdate(float* cameraPosition, float x, float y, int width, int height)
+void Renderer::CameraUpdate(float* cameraPosition, float x, float y, int width, int height, float endTileX, float endTileY)
 {
     //follow the player when they get to the centre of the screen
     cameraPosition[0] = -(SCREEN_WIDTH / 2) + (x + width / 2);
@@ -37,8 +37,12 @@ void Renderer::CameraUpdate(float* cameraPosition, float x, float y, int width, 
     //stop the camera if it hits 0 in x/y
     if (cameraPosition[0] < 0)
         cameraPosition[0] = 0;
+    if (cameraPosition[0] + SCREEN_WIDTH > endTileX)
+        cameraPosition[0] = endTileX - SCREEN_WIDTH;
     if (cameraPosition[1] < 0)
         cameraPosition[1] = 0;
+    if (cameraPosition[1] + SCREEN_HEIGHT > endTileY)
+        cameraPosition[1] = endTileY - SCREEN_HEIGHT;
 }
 
 float* Renderer::GetCameraPos()

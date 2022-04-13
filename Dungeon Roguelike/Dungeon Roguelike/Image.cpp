@@ -14,6 +14,9 @@ Image::Image(float x, float y, const char* filePath)
 	{
 		printf("Couldnt Load image\n");
 	}
+
+	m_width = al_get_bitmap_width(bitmap);
+	m_height = al_get_bitmap_height(bitmap);
 }
 
 float Image::GetXPos() const
@@ -29,6 +32,16 @@ float Image::GetYPos() const
 float Image::GetRotation() const
 {
 	return m_rotation;
+}
+
+int Image::GetWidth() const
+{
+	return m_width;
+}
+
+int Image::GetHeight() const
+{
+	return m_height;
 }
 
 void Image::SetPos(float x, float y)

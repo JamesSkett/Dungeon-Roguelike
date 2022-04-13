@@ -3,7 +3,6 @@
 
 #include <allegro5/allegro5.h>
 
-
 class Tile;
 
 #define SCREEN_WIDTH 1920
@@ -20,7 +19,7 @@ public:
 	static ALLEGRO_TRANSFORM camera;
 
 
-	void CameraUpdate(float* cameraPosition, float x, float y, int width, int height);
+	void CameraUpdate(float* cameraPosition, float x, float y, int width, int height, float endTileX, float endTileY);
 
 	float* GetCameraPos();
 

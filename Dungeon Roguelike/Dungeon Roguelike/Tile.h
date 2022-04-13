@@ -16,6 +16,7 @@ public:
 	void Draw();
 
 	Image* GetImage();
+	bool IsWalkable() const;
 
 	~Tile();
 

@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
 
 class Image;
+class Tile;
 
 class Player
 {
@@ -11,6 +13,8 @@ public:
 
 	Image* &GetImage();
 
+	void UpdatePosition(float dx, float dy, std::vector<Tile*> &vTiles);
+
 	void init(int lives, int energyBars, int spades);
 
 	void printProperties();
@@ -20,6 +24,7 @@ public:
 	void removeSpade();
 	void addEnergyBar();
 
+	bool OnCollision(std::vector<Tile*> &vTiles);
 
 	//properties
 	int _energyBars = 0;

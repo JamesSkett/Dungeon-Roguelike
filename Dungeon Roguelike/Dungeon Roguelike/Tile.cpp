@@ -18,6 +18,11 @@ Image* Tile::GetImage()
 	return image;
 }
 
+bool Tile::IsWalkable() const
+{
+	return m_walkable;
+}
+
 Tile::~Tile()
 {
 	delete image;

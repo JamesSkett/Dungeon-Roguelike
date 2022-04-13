@@ -12,6 +12,8 @@ public:
 	float GetXPos() const;
 	float GetYPos() const;
 	float GetRotation() const;
+	int GetWidth() const;
+	int GetHeight() const;
 
 	//Setters
 	void SetPos(float x, float y);
@@ -26,7 +28,7 @@ public:
 
 private:
 	float m_x, m_y, m_rotation, m_scale;
-
+	int m_width, m_height;
 	ALLEGRO_BITMAP* bitmap;
 };
 
