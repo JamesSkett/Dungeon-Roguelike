@@ -1,19 +1,19 @@
 #pragma once
 #include <vector>
 
+#include "Entity.h"
+
 class Image;
 class Tile;
 
-class Player
+class Player : public Entity
 {
 public:
 	Player(float x, float y, const char* filePath);
 
 	void Draw();
 
-	Image* &GetImage();
-
-	void UpdatePosition(float dx, float dy, std::vector<Tile*> &vTiles);
+	void UpdatePosition(float dx, float dy, const std::vector<Tile*> &vTiles);
 
 	void init(int lives, int energyBars, int spades);
 
@@ -24,20 +24,15 @@ public:
 	void removeSpade();
 	void addEnergyBar();
 
-	bool OnCollision(std::vector<Tile*> &vTiles);
+	bool OnCollision(const std::vector<Tile*> &vTiles);
 
 	//properties
+
+private:
+
 	int _energyBars = 0;
 	int _lives = 0;
-private:
 	int _spades = 0;
-	Image* m_image;
-
-
-protected:
-	//Position
-	int _x;
-	int _y;
 
 };
 

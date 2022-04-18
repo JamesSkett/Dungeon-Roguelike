@@ -1,10 +1,11 @@
 #pragma once
-#include "Player.h"
-class Enemy
+#include "Entity.h"
+
+class Enemy : public Entity
 {
 public:
 	//constructor
-	Enemy(char tile);
+	Enemy(float x, float y, const char* filePath);
 
 	char getTile() { return _tile; }
 

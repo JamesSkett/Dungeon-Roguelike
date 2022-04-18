@@ -7,33 +7,26 @@
 #include "Tile.h"
 
 Player::Player(float x, float y, const char* filePath)
+	: Entity(x, y, filePath), _energyBars(0), _lives(3), _spades(0)
 {
-	//initialises the players x and y coords to 0
-	_x = x;
-	_y = y;
 
-	m_image = new Image(_x, _y, filePath);
 }
 
 void Player::Draw()
 {
-	m_image->Draw();
+	GetImage()->Draw();
 }
 
-Image* &Player::GetImage() 
-{
-	return m_image;
-}
 
-void Player::UpdatePosition(float dx, float dy, std::vector<Tile*> &vTiles)
+void Player::UpdatePosition(float dx, float dy, const std::vector<Tile*> &vTiles)
 {
-	float oldXPos = m_image->GetXPos();
-	float oldYPos = m_image->GetYPos();
+	float oldXPos = GetImage()->GetXPos();
+	float oldYPos = GetImage()->GetYPos();
 
-	m_image->UpdatePosition(dx, dy);
+	GetImage()->UpdatePosition(dx, dy);
 
 	if (OnCollision(vTiles))
-		m_image->SetPos(oldXPos, oldYPos);
+		GetImage()->SetPos(oldXPos, oldYPos);
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -68,15 +61,7 @@ void Player::removeLives()
 //used to check if the player has a spade to dig with in Level::movePlayer() function
 bool Player::hasSpade()
 {
-	if (_spades == 0)
-	{
-		return false;
-	}
-	else 
-	{
-		return true;
-	}
-	
+	return _spades ? false : true;
 }
 
 //---------------------------------------------------------------------------------------------------
@@ -103,7 +88,7 @@ void Player::addEnergyBar()
 	_energyBars++;
 }
 
-bool Player::OnCollision(std::vector<Tile*> &vTiles)
+bool Player::OnCollision(const std::vector<Tile*> &vTiles)
 {
 	for (int i = 0; i < vTiles.size(); i++)
 	{
@@ -113,8 +98,8 @@ bool Player::OnCollision(std::vector<Tile*> &vTiles)
 			float tileY = vTiles[i]->GetImage()->GetYPos();
 			int tileW = vTiles[i]->GetImage()->GetWidth();
 			int tileH = vTiles[i]->GetImage()->GetHeight();
-			if ((m_image->GetXPos() < tileX + tileW) && (m_image->GetXPos() + m_image->GetWidth() > tileX) &&
-				(m_image->GetYPos() < tileY + tileH) && (m_image->GetYPos() + m_image->GetHeight() > tileY))
+			if ((GetImage()->GetXPos() < tileX + tileW) && (GetImage()->GetXPos() + GetImage()->GetWidth() > tileX) &&
+				(GetImage()->GetYPos() < tileY + tileH) && (GetImage()->GetYPos() + GetImage()->GetHeight() > tileY))
 			{
 				return true;
 			}
