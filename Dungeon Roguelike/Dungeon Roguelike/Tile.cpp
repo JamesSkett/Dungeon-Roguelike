@@ -8,12 +8,12 @@ Tile::Tile(float x, float y, bool walkable, const char* filePath)
 	image = new Image(x, y, filePath);
 }
 
-void Tile::Draw()
+void Tile::Draw() const
 {
 	image->Draw();
 }
 
-Image* Tile::GetImage()
+Image* Tile::GetImage() const
 {
 	return image;
 }

@@ -13,9 +13,9 @@ class Tile
 public:
 	Tile(float x, float y, bool walkable, const char* filePath);
 	Tile() = default;
-	void Draw();
+	void Draw() const;
 
-	Image* GetImage();
+	Image* GetImage() const;
 	bool IsWalkable() const;
 
 	~Tile();

@@ -10,14 +10,8 @@
 
 //Constructor sets up the game
 GameSystem::GameSystem(const char* levelFileName)
+	: renderer(new Renderer()), m_level(new Level()), m_timer(al_create_timer(1.0 / 60.0)), m_queue(al_create_event_queue())
 {
-	renderer = new Renderer();
-
-	m_timer = al_create_timer(1.0 / 60.0);
-	m_queue = al_create_event_queue();
-
-	//_mainMenu.displayMenu();
-	m_level = new Level();
 	m_level->Load(levelFileName, m_vTiles, m_player);
 }
 

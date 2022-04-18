@@ -22,13 +22,15 @@ public:
 	void UpdatePosition(float dx, float dy);
 	void UpdateRotation(float increment);
 
-	void Draw();
+	void Draw() const;
 
 	~Image();
 
 private:
 	float m_x, m_y, m_rotation, m_scale;
-	int m_width, m_height;
+
 	ALLEGRO_BITMAP* bitmap;
+	int m_width, m_height;
+
 };
 

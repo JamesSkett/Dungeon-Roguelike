@@ -3,13 +3,8 @@
 #include <stdio.h>
 
 Image::Image(float x, float y, const char* filePath)
+	: m_x(x), m_y(y), m_rotation(0), m_scale(1), bitmap(al_load_bitmap(filePath))
 {
-	m_x = x;
-	m_y = y;
-	m_rotation = 0;
-	m_scale = 1;
-
-	bitmap = al_load_bitmap(filePath);
 	if (!bitmap)
 	{
 		printf("Couldnt Load image\n");
@@ -66,7 +61,7 @@ void Image::UpdateRotation(float increment)
 	m_rotation += increment;
 }
 
-void Image::Draw()
+void Image::Draw() const
 {
 	al_draw_bitmap(bitmap, m_x, m_y, 0);
 }

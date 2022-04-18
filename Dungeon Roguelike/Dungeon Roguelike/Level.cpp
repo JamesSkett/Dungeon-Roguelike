@@ -12,6 +12,8 @@
 #include "Player.h"
 #include "Renderer.h"
 
+
+
 Level::Level()
 {
 }
@@ -64,7 +66,7 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &playe
 			{
 			case '@':
 				CreateFloor(x, y, tiles);
-				player = new Player(x * m_tileOffset, y * m_tileOffset, "player.png");
+				player = new Player(x * TILE_OFFSET, y * TILE_OFFSET, "player.png");
 				//player.setPosition(j, i);
 				break;
 			case 'M':
@@ -100,12 +102,12 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &playe
 
 void Level::CreateFloor(float x, float y, std::vector<Tile*> &tiles)
 {
-	tiles.push_back(new Floor(x * m_tileOffset, y * m_tileOffset, true, "floor.png"));
+	tiles.push_back(new Floor(x * TILE_OFFSET, y * TILE_OFFSET, true, "floor.png"));
 }
 
 void Level::CreateWall(float x, float y, std::vector<Tile*>& tiles)
 {
-	tiles.push_back(new Wall(x * m_tileOffset, y * m_tileOffset, false, "wall.png"));
+	tiles.push_back(new Wall(x * TILE_OFFSET, y * TILE_OFFSET, false, "wall.png"));
 }
 
 //---------------------------------------------------------------------------
@@ -118,102 +120,6 @@ void Level::print() //Prints out the level.
 	for (int i = 0; i < m_levelData.size(); i++) {
 		printf("%s\n", m_levelData[i].c_str());
 	}
-
-}
-
-//---------------------------------------------------------------------------
-void Level::movePlayer(char input, Player &player)
-{
-	////used to store player position
-	//int playerX;
-	//int playerY;
-
-
-	////checks to see if player has a spade or not then stores answer in bool hasSpade
-	//bool hasSpade = player.hasSpade();
-
-	////processes the player input
-	//switch (input)
-	//{
-	//case 'w': //up
-	//case 'W':
-	//	processPlayerMove(player, playerX, playerY - 1);
-	//	break;
-	//case 's': //down
-	//case 'S':
-	//	processPlayerMove(player, playerX, playerY + 1);
-	//	break;
-	//case 'a': //left
-	//case 'A':
-	//	processPlayerMove(player, playerX - 1, playerY);
-	//	break;
-	//case 'd': //right
-	//case 'D':
-	//	processPlayerMove(player, playerX + 1, playerY);
-	//	break;
-	//case 'e': //dig hole
-	//case 'E':
-	//	//if you dont have a spade you cant dig
-	//	if (hasSpade == false)
-	//	{
-	//		printf("\nYou dont have a spade!!");
-	//		_getch();
-	//		break;
-	//	}
-	//	else
-	//	{
-	//		digHole(player, playerX, playerY);
-	//	}
-	//	break;
-	//case 'q': //quits the game
-	//case 'Q':
-	//	exit(1);
-	//	break;
-	//default:
-	//	printf("Invalid Input!!\n");
-	//	printf("Press any key to continue:");
-	//	_getch();
-	//	break;
-	//}
-
-}
-
-//----------------------------------------------------------------------------------------------
-//updates the enemies getting a random move from enemy.getMove()
-void Level::updateEnemies(Player & player)
-{
-	//char enemyMove;
-	//int playerX;
-	//int playerY;
-	//int enemyX;
-	//int enemyY;
-
-	//player.getPosition(playerX, playerY);
-
-	////Loop through the enemy vector
-	//for (int i = 0; i < m_enemy.size(); i++)
-	//{
-	//	//get enemy AI movemnet 
-	//	enemyMove = m_enemy[i].getMove(playerX, playerY);
-	//	//get enemies current position
-	//	//m_enemy[i].getPosition(enemyX, enemyY);
-	//	//process the AI move
-	//	switch (enemyMove)
-	//	{
-	//	case 'w':
-	//		processEnemyMove(player, i, enemyX, enemyY - 1);
-	//		break;
-	//	case 's':
-	//		processEnemyMove(player, i, enemyX - 1, enemyY);
-	//		break;
-	//	case 'a':
-	//		processEnemyMove(player, i, enemyX, enemyY + 1);
-	//		break;
-	//	case 'd':
-	//		processEnemyMove(player, i, enemyX + 1, enemyY);
-	//		break;
-	//	}
-	//}
 
 }
 

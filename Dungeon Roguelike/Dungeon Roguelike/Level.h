@@ -19,10 +19,6 @@ public:
 
 	void print();
 
-	void movePlayer(char input, Player &player);
-	void updateEnemies(Player &player);
-
-
 	//Getters
 	char getTile(int x, int y);
 
@@ -40,6 +36,6 @@ private:
 	std::vector <std::string> m_levelData;
 	std::vector <Enemy> m_enemy;
 
-	float m_tileOffset = 64.f;
+	const float TILE_OFFSET = 64.f;
 };
 
