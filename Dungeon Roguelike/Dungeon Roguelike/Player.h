@@ -11,8 +11,6 @@ class Player : public Entity
 public:
 	Player(float x, float y, const char* filePath);
 
-	void Draw();
-
 	void UpdatePosition(float dx, float dy, const std::vector<Tile*> &vTiles);
 
 	void init(int lives, int energyBars, int spades);

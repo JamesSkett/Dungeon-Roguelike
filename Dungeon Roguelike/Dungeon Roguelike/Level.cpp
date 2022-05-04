@@ -21,6 +21,8 @@ Level::Level()
 //---------------------------------------------------------------------------
 void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &player)   //This loads the level from the file "Level_1.txt"
 {
+	std::vector <std::string> m_levelData;
+
 	//Loads the  level
 	std::ifstream file;
 
@@ -36,13 +38,14 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &playe
 	}
 
 	std::string line;
-
+	int stringCount = 0;
 	//Loop through the entire file, getting each row and
 	//putting it in the line string.
 	while (std::getline(file, line)) 
 	{
 		//Push the current line onto the _levelData array
 		m_levelData.push_back(line);
+		stringCount++;
 	}
 
 	file.close();
@@ -51,7 +54,7 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &playe
 	char tile;
 
 
-
+	m_levelData.reserve(stringCount);
 	//loops through the _levelData vector and processes each tile
 	for (int i = 0; i < m_levelData.size(); i++)
 	{
@@ -102,38 +105,25 @@ void Level::Load(const char* fileName, std::vector<Tile*> &tiles, Player* &playe
 
 void Level::CreateFloor(float x, float y, std::vector<Tile*> &tiles)
 {
-	tiles.push_back(new Floor(x * TILE_OFFSET, y * TILE_OFFSET, true, "floor.png"));
+	tiles.emplace_back(new Floor(x * TILE_OFFSET, y * TILE_OFFSET, true, "floor.png"));
 }
 
 void Level::CreateWall(float x, float y, std::vector<Tile*>& tiles)
 {
-	tiles.push_back(new Wall(x * TILE_OFFSET, y * TILE_OFFSET, false, "wall.png"));
+	tiles.emplace_back(new Wall(x * TILE_OFFSET, y * TILE_OFFSET, false, "wall.png"));
 }
 
 //---------------------------------------------------------------------------
-void Level::print() //Prints out the level.
-{
-	//prints a bunch of new lines so previous level print cant be seen
-	printf("%s", std::string(100, '\n').c_str());
-
-	//prints each line of the vector 1 by 1
-	for (int i = 0; i < m_levelData.size(); i++) {
-		printf("%s\n", m_levelData[i].c_str());
-	}
-
-}
-
-//---------------------------------------------------------------------------
-char Level::getTile(int x, int y)  //Gets a tile from the board
-{
-	return m_levelData[y][x];
-}
-
-//---------------------------------------------------------------------------
-void Level::setTile(int x, int y, char tile) //sets a tile on the board
-{
-	m_levelData[y][x] = tile;
-}
+//char Level::getTile(int x, int y)  //Gets a tile from the board
+//{
+//	return m_levelData[y][x];
+//}
+//
+////---------------------------------------------------------------------------
+//void Level::setTile(int x, int y, char tile) //sets a tile on the board
+//{
+//	m_levelData[y][x] = tile;
+//}
 
 //---------------------------------------------------------------------------
 //Process the players movement
@@ -250,85 +240,85 @@ void Level::processEnemyMove(Player & player, int enemyIndex, int targetX, int t
 //processes the players choice to dig a hole
 void Level::digHole(Player &player, int targetX, int targetY)
 {
-	char direction;
-	char tile;
-	printf("Choose a direction to dig (W/S/A/D): ");
-	direction = _getch();
+	//char direction;
+	//char tile;
+	//printf("Choose a direction to dig (W/S/A/D): ");
+	//direction = _getch();
 
 
-	//sets the tile to 'O' in the direction the player chooses
-	// if the tile is a '#', 'M' or 'B' the player cannot dig there
-	switch (direction)
-	{
-	case 'w': //up
-	case 'W':
-		tile = getTile(targetX, targetY - 1);
-		switch (tile)
-		{
-			//makes sure you cant dig over a wall or where a mummy is standing
-		case '#':
-		case 'M':
-			printf("\nYou Cant dig here!");
-			break;
-		default:
-			setTile(targetX, targetY - 1, 'O');
-			player.removeSpade();
-			break;
-		}
+	////sets the tile to 'O' in the direction the player chooses
+	//// if the tile is a '#', 'M' or 'B' the player cannot dig there
+	//switch (direction)
+	//{
+	//case 'w': //up
+	//case 'W':
+	//	tile = getTile(targetX, targetY - 1);
+	//	switch (tile)
+	//	{
+	//		//makes sure you cant dig over a wall or where a mummy is standing
+	//	case '#':
+	//	case 'M':
+	//		printf("\nYou Cant dig here!");
+	//		break;
+	//	default:
+	//		setTile(targetX, targetY - 1, 'O');
+	//		player.removeSpade();
+	//		break;
+	//	}
 
-		break;
-	case 's': //down
-	case 'S':
-		tile = getTile(targetX, targetY + 1);
-		switch (tile)
-		{
-		case '#':
-		case 'M':
-			printf("\nYou Cant dig here!");
-			break;
-		default:
-			setTile(targetX, targetY + 1, 'O');
-			player.removeSpade();
-			break;
-		}
+	//	break;
+	//case 's': //down
+	//case 'S':
+	//	tile = getTile(targetX, targetY + 1);
+	//	switch (tile)
+	//	{
+	//	case '#':
+	//	case 'M':
+	//		printf("\nYou Cant dig here!");
+	//		break;
+	//	default:
+	//		setTile(targetX, targetY + 1, 'O');
+	//		player.removeSpade();
+	//		break;
+	//	}
 
-		break;
-	case 'a': //left
-	case 'A':
-		tile = getTile(targetX - 1, targetY);
-		switch (tile)
-		{
-		case '#':
-		case 'M':
-			printf("\nYou Cant dig here!");
-			break;
-		default:
-			setTile(targetX - 1, targetY, 'O');
-			player.removeSpade();
-			break;
-		}
+	//	break;
+	//case 'a': //left
+	//case 'A':
+	//	tile = getTile(targetX - 1, targetY);
+	//	switch (tile)
+	//	{
+	//	case '#':
+	//	case 'M':
+	//		printf("\nYou Cant dig here!");
+	//		break;
+	//	default:
+	//		setTile(targetX - 1, targetY, 'O');
+	//		player.removeSpade();
+	//		break;
+	//	}
 
-		break;
-	case 'd': //right
-	case 'D':
-		tile = getTile(targetX + 1, targetY);
-		switch (tile)
-		{
-		case '#':
-		case 'M':
-		case 'B':
-			printf("\nYou Cant dig here!");
-			break;
-		default:
-			setTile(targetX + 1, targetY, 'O');
-			player.removeSpade();
-			break;
-		}
+	//	break;
+	//case 'd': //right
+	//case 'D':
+	//	tile = getTile(targetX + 1, targetY);
+	//	switch (tile)
+	//	{
+	//	case '#':
+	//	case 'M':
+	//	case 'B':
+	//		printf("\nYou Cant dig here!");
+	//		break;
+	//	default:
+	//		setTile(targetX + 1, targetY, 'O');
+	//		player.removeSpade();
+	//		break;
+	//	}
 
-		break;
-	default:
-		printf("Invalid Input!!\n");
-		printf("Press any key to continue:");
-		break;
-	}
+	//	break;
+	//default:
+	//	printf("Invalid Input!!\n");
+	//	printf("Press any key to continue:");
+	//	break;
+	//}
 }

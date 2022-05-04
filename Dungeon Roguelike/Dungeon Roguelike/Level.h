@@ -17,8 +17,6 @@ public:
 	void CreateFloor(float x, float y, std::vector<Tile*>& tiles);
 	void CreateWall(float x, float y, std::vector<Tile*>& tiles);
 
-	void print();
-
 	//Getters
 	char getTile(int x, int y);
 
@@ -28,13 +26,17 @@ public:
 
 
 private:
+	////////////////////////////////////////
+	/////NEED TO MOVE THESE FUNCTIONS//////
+	///////////////////////////////////////
 	void processPlayerMove(Player &player, int targetX, int targetY);
 	void processEnemyMove(Player &player, int enemyIndex, int targetX, int targetY);
 	void digHole(Player &player, int targetX, int targetY);
+	////////////////////////////////////////
+	/////NEED TO MOVE THESE FUNCTIONS//////
+	///////////////////////////////////////
 
 	//stores the level information
-	std::vector <std::string> m_levelData;
-	std::vector <Enemy> m_enemy;
 
 	const float TILE_OFFSET = 64.f;
 };

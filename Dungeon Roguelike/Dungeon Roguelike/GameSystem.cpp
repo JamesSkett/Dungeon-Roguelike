@@ -10,8 +10,10 @@
 
 //Constructor sets up the game
 GameSystem::GameSystem(const char* levelFileName)
-	: renderer(new Renderer()), m_level(new Level()), m_timer(al_create_timer(1.0 / 60.0)), m_queue(al_create_event_queue())
+	: renderer(new Renderer()), m_level(new Level())
 {
+	m_timer = al_create_timer(1.0 / 60.0);
+	m_queue = al_create_event_queue();
 	m_level->Load(levelFileName, m_vTiles, m_player);
 }
 
@@ -19,6 +21,16 @@ GameSystem::~GameSystem()
 {
 	al_destroy_timer(m_timer);
 	al_destroy_event_queue(m_queue);
+
+	delete renderer;
+	delete m_player;
+
+	//for (int i = 0; i < m_vTiles.size(); i++)
+	//{
+	//	delete m_vTiles[i];
+	//}
+
+	m_vTiles.clear();
 
 	if (m_level != nullptr) 	
 	{

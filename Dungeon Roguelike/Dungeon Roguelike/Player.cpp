@@ -12,12 +12,6 @@ Player::Player(float x, float y, const char* filePath)
 
 }
 
-void Player::Draw()
-{
-	GetImage()->Draw();
-}
-
-
 void Player::UpdatePosition(float dx, float dy, const std::vector<Tile*> &vTiles)
 {
 	float oldXPos = GetImage()->GetXPos();

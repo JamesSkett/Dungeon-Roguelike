@@ -2,6 +2,7 @@
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
+#include "Engine.h"
 
 class Image
 {
@@ -9,8 +10,7 @@ public:
 	Image(float x, float y, const char* filePath);
 
 	//Getters
-	float GetXPos() const;
-	float GetYPos() const;
+	engine::Vector2 GetPos() const;
 	float GetRotation() const;
 	int GetWidth() const;
 	int GetHeight() const;
@@ -27,8 +27,8 @@ public:
 	~Image();
 
 private:
-	float m_x, m_y, m_rotation, m_scale;
-
+	float m_rotation, m_scale;
+	engine::Vector2 pos = { 0, 0 };
 	ALLEGRO_BITMAP* bitmap;
 	int m_width, m_height;
 

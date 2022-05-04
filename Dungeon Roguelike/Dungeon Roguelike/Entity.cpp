@@ -10,6 +10,11 @@ Entity::Entity(float x, float y, const char* filePath)
 {
 }
 
+void Entity::Draw() const
+{
+	m_image->Draw();
+}
+
 
 Image*& Entity::GetImage()
 {
