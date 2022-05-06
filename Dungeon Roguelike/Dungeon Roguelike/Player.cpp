@@ -14,8 +14,8 @@ Player::Player(float x, float y, const char* filePath)
 
 void Player::UpdatePosition(float dx, float dy, const std::vector<Tile*> &vTiles)
 {
-	float oldXPos = GetImage()->GetXPos();
-	float oldYPos = GetImage()->GetYPos();
+	float oldXPos = GetImage()->GetPos().x;
+	float oldYPos = GetImage()->GetPos().y;
 
 	GetImage()->UpdatePosition(dx, dy);
 
@@ -88,12 +88,12 @@ bool Player::OnCollision(const std::vector<Tile*> &vTiles)
 	{
 		if (vTiles[i]->IsWalkable() == false)
 		{
-			float tileX = vTiles[i]->GetImage()->GetXPos();
-			float tileY = vTiles[i]->GetImage()->GetYPos();
+			float tileX = vTiles[i]->GetImage()->GetPos().x;
+			float tileY = vTiles[i]->GetImage()->GetPos().y;
 			int tileW = vTiles[i]->GetImage()->GetWidth();
 			int tileH = vTiles[i]->GetImage()->GetHeight();
-			if ((GetImage()->GetXPos() < tileX + tileW) && (GetImage()->GetXPos() + GetImage()->GetWidth() > tileX) &&
-				(GetImage()->GetYPos() < tileY + tileH) && (GetImage()->GetYPos() + GetImage()->GetHeight() > tileY))
+			if ((GetImage()->GetPos().x < tileX + tileW) && (GetImage()->GetPos().x + GetImage()->GetWidth() > tileX) &&
+				(GetImage()->GetPos().y < tileY + tileH) && (GetImage()->GetPos().y + GetImage()->GetHeight() > tileY))
 			{
 				return true;
 			}

@@ -1,12 +1,7 @@
 #include "Engine.h"
-#include <iostream>
 
 namespace engine
 {
-	void engine::PrintMessage()
-	{
-		std::cout << "Hello World" << std::endl;
-	}
 
 	Vector2::Vector2(float x, float y)
 		: x(x), y(y)
@@ -14,12 +9,12 @@ namespace engine
 
 	}
 
-	Vector2 Vector2::Add(Vector2& other)
+	Vector2 Vector2::Add(const Vector2& other)
 	{
 		return Vector2(x + other.x, y + other.y);
 	}
 
-	Vector2 Vector2::operator+(Vector2& other)
+	Vector2 Vector2::operator+(const Vector2& other)
 	{
 		return Add(other);
 	}
@@ -41,7 +36,12 @@ namespace engine
 		return sqrtf((x * x) + (y * y));
 	}
 
-	std::ostream& operator<<(std::ostream& stream, Vector2& other)
+	float DotProduct(const Vector2& v1, const Vector2& v2)
+	{
+		return (v1.x * v2.x) + (v1.y * v2.y);
+	}
+
+	std::ostream& operator<<(std::ostream& stream, const Vector2& other)
 	{
 		stream << other.x << ", " << other.y << std::endl;
 		return stream;

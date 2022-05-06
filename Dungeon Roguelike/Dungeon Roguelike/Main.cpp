@@ -1,18 +1,14 @@
-#include <iostream>
-#include <cstdlib>
-#include <string>
-//#include <conio.h>
-
-#include "MainMenu.h"
 #include "GameSystem.h"
-#include "Renderer.h"
 #include "Engine.h"
-
-using namespace std;
+#include <iostream>
 
 int main()
 {	
-	engine::PrintMessage();
+	engine::Vector2 v1 = { 2 ,4 };
+	engine::Vector2 v2 = { 5, 9 };
+
+	std::cout << engine::DotProduct(v1, v2) << std::endl;
+
 	GameSystem* renderer = new GameSystem("level_1.txt");
 
 	renderer->playGame();
